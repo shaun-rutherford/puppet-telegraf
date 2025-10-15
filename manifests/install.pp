@@ -67,16 +67,15 @@ class telegraf::install {
             target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/var/log/telegraf",
           ;
         }
-
-        file { '/Library/LaunchDaemons/telegraf.plist':
-          ensure  => file,
-          content => epp('telegraf/telegraf.plist.epp', {
-            'config_file_owner' => $telegraf::config_file_owner,
-            'config_file_group' => $telegraf::config_file_group,
-          }),
+      } else {
+        package { $telegraf::package_name:
+          ensure          => $telegraf::ensure,
+          provider        => 'homebrew',
+          install_options => $telegraf::install_options,
         }
       }
-      elsif $telegraf::manage_repo {
+
+      if $telegraf::manage_repo {
         notify { 'telegraf repo warn':
           message  => "Installing from repo on ${facts['os']['name']} is not supported",
           loglevel => 'warning',
@@ -205,7 +204,16 @@ class telegraf::install {
       }
     }
     'windows': {
-      # repo is not applicable to windows
+      # required to install telegraf on windows
+      require chocolatey
+
+      # package install
+      package { $telegraf::package_name:
+        ensure          => $telegraf::ensure,
+        provider        => chocolatey,
+        source          => $telegraf::windows_package_url,
+        install_options => $telegraf::install_options,
+      }
     }
     'FreeBSD': {
       # repo is not applicable to windows
@@ -215,25 +223,12 @@ class telegraf::install {
     }
   }
 
-  if $facts['os']['family'] == 'windows' {
-    # required to install telegraf on windows
-    require chocolatey
-
-    # package install
-    package { $telegraf::package_name:
-      ensure          => $telegraf::ensure,
-      provider        => chocolatey,
-      source          => $telegraf::windows_package_url,
-      install_options => $telegraf::install_options,
-    }
-  } else {
-    if ! $telegraf::manage_archive {
-      stdlib::ensure_packages([$telegraf::package_name],
-        {
-          ensure          => $telegraf::ensure,
-          install_options => $telegraf::install_options,
-        }
-      )
-    }
+  unless $telegraf::manage_archive {
+    stdlib::ensure_packages([$telegraf::package_name],
+      {
+        ensure          => $telegraf::ensure,
+        install_options => $telegraf::install_options,
+      }
+    )
   }
 }
