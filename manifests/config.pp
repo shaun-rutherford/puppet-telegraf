@@ -45,4 +45,14 @@ class telegraf::config inherits telegraf {
     recurse => true,
     *       => $_dir,
   }
+
+  if $facts['os']['family'] == 'Darwin' {
+    file { '/Library/LaunchDaemons/telegraf.plist':
+      ensure  => $telegraf::ensure_file,
+      content => epp('telegraf/telegraf.plist.epp', {
+        'config_file_owner' => $telegraf::config_file_owner,
+        'config_file_group' => $telegraf::config_file_group,
+      }),
+    }
+  }
 }
