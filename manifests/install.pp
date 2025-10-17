@@ -21,10 +21,6 @@ class telegraf::install {
         }
 
         $install_dir_deps = [
-          '/usr/local/bin',
-          '/usr/local/etc',
-          '/usr/local/opt',
-          '/usr/local/var',
           '/usr/local/var/log',
         ]
 
@@ -32,39 +28,37 @@ class telegraf::install {
           ensure => directory,
         }
 
-        file { "${telegraf::archive_install_dir}-${telegraf::archive_version}":
+        file { $telegraf::archive_install_dir:
           ensure  => directory,
           owner   => $telegraf::config_file_owner,
           group   => $telegraf::config_file_group,
           require => File[$install_dir_deps],
         }
 
-        archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
+        -> archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
           ensure          => present,
           extract         => true,
-          extract_path    => "${telegraf::archive_install_dir}-${telegraf::archive_version}",
+          extract_path    => $telegraf::archive_install_dir,
           extract_command => 'tar xfz %s --strip-components=2',
           source          => "https://dl.influxdata.com/telegraf/releases/telegraf-${telegraf::archive_version}_darwin_amd64.tar.gz",
-          creates         => "${telegraf::archive_install_dir}-${$telegraf::archive_version}/usr/bin/telegraf",
+          creates         => "${telegraf::archive_install_dir}/usr/bin/telegraf",
           user            => $telegraf::config_file_owner,
           group           => $telegraf::config_file_group,
           cleanup         => true,
-          require         => File["${telegraf::archive_install_dir}-${telegraf::archive_version}"],
         }
 
-        file {
+        -> file {
           default:
             ensure  => link,
-            require => Archive["/tmp/telegraf-${telegraf::archive_version}.tar.gz"],
           ;
           '/usr/local/bin/telegraf':
-            target  => "${telegraf::archive_install_dir}-${telegraf::archive_version}/usr/bin/telegraf",
+            target  => "${telegraf::archive_install_dir}/usr/bin/telegraf",
           ;
           '/usr/local/etc/telegraf':
-            target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/etc/telegraf",
+            target => "${telegraf::archive_install_dir}/etc/telegraf",
           ;
           '/usr/local/var/log/telegraf':
-            target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/var/log/telegraf",
+            target => "${telegraf::archive_install_dir}/var/log/telegraf",
           ;
         }
       } else {

@@ -5,11 +5,11 @@
 class telegraf::params {
   case $facts['os']['family'] {
     'Darwin': {
-      $config_file          = '/usr/local/etc/telegraf/telegraf.conf'
+      $config_file          = '/usr/local/etc/telegraf.conf'
       $config_file_owner    = 'telegraf'
       $config_file_group    = 'telegraf'
       $config_file_mode     = '0640'
-      $config_folder        = '/usr/local/etc/telegraf/telegraf.d'
+      $config_folder        = '/usr/local/etc/telegraf.d'
       $config_folder_mode   = '0770'
       $logfile              = '/usr/local/var/log/telegraf/telegraf.log'
       $manage_repo          = false
