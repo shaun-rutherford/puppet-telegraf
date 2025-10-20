@@ -46,6 +46,12 @@ class telegraf::config inherits telegraf {
     *       => $_dir,
   }
 
+  file { $telegraf::log_directory:
+    owner => $telegraf::config_file_owner,
+    group => $telegraf::config_file_group,
+    *     => $_dir,
+  }
+
   if $facts['os']['family'] == 'Darwin' {
     file { '/Library/LaunchDaemons/telegraf.plist':
       ensure  => $telegraf::ensure_file,

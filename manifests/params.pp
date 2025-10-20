@@ -11,14 +11,12 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
       $config_folder_mode   = '0770'
-      $logfile              = '/usr/local/var/log/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = true
       $manage_user          = true
-      $archive_install_dir  = '/usr/local/opt/telegraf'
+      $archive_install_dir  = '/usr/local/opt'
       $archive_version      = '1.29.4'
       $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_darwin_amd64.tar.gz"
-      $repo_location        = 'https://repos.influxdata.com/'
       $service_enable       = true
       $service_ensure       = running
       $service_hasstatus    = true
@@ -31,7 +29,6 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
       $config_folder_mode   = '0770'
-      $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = false
       $manage_user          = false
@@ -51,6 +48,7 @@ class telegraf::params {
       $config_file_mode     = undef
       $config_folder        = 'C:/Program Files/telegraf/telegraf.d'
       $config_folder_mode   = undef
+      $log_directory        = undef
       $logfile              = 'C:/Program Files/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = false
@@ -71,14 +69,12 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'
       $config_folder_mode   = '0770'
-      $logfile              = ''
       $manage_repo          = false
       $manage_archive       = true
       $manage_user          = true
       $archive_install_dir  = '/opt/telegraf'
       $archive_version      = '1.29.4'
       $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_linux_amd64.tar.gz"
-      $repo_location        = 'https://repos.influxdata.com/'
       $service_enable       = true
       $service_ensure       = running
       $service_hasstatus    = true
@@ -91,7 +87,8 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'
       $config_folder_mode   = '0770'
-      $logfile              = ''
+      $log_directory        = '/var/log/telegraf'
+      $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = true
       $manage_archive       = false
       $manage_user          = false

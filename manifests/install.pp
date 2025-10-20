@@ -20,19 +20,10 @@ class telegraf::install {
       }
 
       if $telegraf::manage_archive {
-        $install_dir_deps = [
-          '/usr/local/var/log',
-        ]
-
-        file { $install_dir_deps:
-          ensure => directory,
-        }
-
         file { $telegraf::archive_install_dir:
-          ensure  => directory,
-          owner   => $telegraf::config_file_owner,
-          group   => $telegraf::config_file_group,
-          require => File[$install_dir_deps],
+          ensure => directory,
+          owner  => $telegraf::config_file_owner,
+          group  => $telegraf::config_file_group,
         }
 
         -> archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
@@ -56,9 +47,6 @@ class telegraf::install {
           ;
           '/usr/local/etc/telegraf':
             target => "${telegraf::archive_install_dir}/etc/telegraf",
-          ;
-          '/usr/local/var/log/telegraf':
-            target => "${telegraf::archive_install_dir}/var/log/telegraf",
           ;
         }
       } else {
@@ -148,11 +136,6 @@ class telegraf::install {
           ensure => file,
           source => 'puppet:///modules/telegraf/telegraf.service',
         }
-        file { '/var/log/telegraf':
-          ensure => directory,
-          owner  => $telegraf::config_file_owner,
-          group  => $telegraf::config_file_group,
-        }
       }
     }
     'Suse': {
@@ -187,11 +170,6 @@ class telegraf::install {
         file { '/etc/systemd/system/telegraf.service':
           ensure => file,
           source => 'puppet:///modules/telegraf/telegraf.service',
-        }
-        file { '/var/log/telegraf':
-          ensure => directory,
-          owner  => $telegraf::config_file_owner,
-          group  => $telegraf::config_file_group,
         }
       }
       elsif $telegraf::manage_repo {
