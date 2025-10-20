@@ -8,18 +8,18 @@ class telegraf::install {
 
   case $facts['os']['family'] {
     'Darwin': {
-      if $telegraf::manage_archive {
-        if $telegraf::manage_user {
-          group { $telegraf::config_file_group:
-            ensure => present,
-          }
-
-          user { $telegraf::config_file_owner:
-            ensure => present,
-            gid    => $telegraf::config_file_group,
-          }
+      if $telegraf::manage_user {
+        group { $telegraf::config_file_group:
+          ensure => present,
         }
 
+        user { $telegraf::config_file_owner:
+          ensure => present,
+          gid    => $telegraf::config_file_group,
+        }
+      }
+
+      if $telegraf::manage_archive {
         $install_dir_deps = [
           '/usr/local/var/log',
         ]
@@ -99,6 +99,16 @@ class telegraf::install {
       }
     }
     'RedHat': {
+      if $telegraf::manage_user {
+        group { $telegraf::config_file_group:
+          ensure => present,
+        }
+        user { $telegraf::config_file_owner:
+          ensure => present,
+          gid    => $telegraf::config_file_group,
+        }
+      }
+
       if $telegraf::manage_repo {
         if $facts['os']['name'] == 'Amazon' {
           $_baseurl = "https://repos.influxdata.com/rhel/6/\$basearch/${telegraf::repo_type}"
@@ -133,15 +143,7 @@ class telegraf::install {
         file { '/etc/telegraf':
           ensure => directory,
         }
-        if $telegraf::manage_user {
-          group { $telegraf::config_file_group:
-            ensure => present,
-          }
-          user { $telegraf::config_file_owner:
-            ensure => present,
-            gid    => $telegraf::config_file_group,
-          }
-        }
+
         file { '/etc/systemd/system/telegraf.service':
           ensure => file,
           source => 'puppet:///modules/telegraf/telegraf.service',
@@ -154,6 +156,16 @@ class telegraf::install {
       }
     }
     'Suse': {
+      if $telegraf::manage_user {
+        group { $telegraf::config_file_group:
+          ensure => present,
+        }
+        user { $telegraf::config_file_owner:
+          ensure => present,
+          gid    => $telegraf::config_file_group,
+        }
+      }
+
       if $telegraf::manage_archive {
         file { $telegraf::archive_install_dir:
           ensure => directory,
@@ -171,15 +183,7 @@ class telegraf::install {
         file { '/etc/telegraf':
           ensure => directory,
         }
-        if $telegraf::manage_user {
-          group { $telegraf::config_file_group:
-            ensure => present,
-          }
-          user { $telegraf::config_file_owner:
-            ensure => present,
-            gid    => $telegraf::config_file_group,
-          }
-        }
+
         file { '/etc/systemd/system/telegraf.service':
           ensure => file,
           source => 'puppet:///modules/telegraf/telegraf.service',
