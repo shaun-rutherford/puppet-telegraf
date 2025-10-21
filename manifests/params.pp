@@ -18,6 +18,7 @@ class telegraf::params {
       $archive_install_dir  = '/usr/local/opt'
       $archive_version      = '1.29.4'
       $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_darwin_amd64.tar.gz"
+      $repo_location        = 'https://repos.influxdata.com/'
       $service_enable       = true
       $service_ensure       = running
       $service_hasstatus    = true
