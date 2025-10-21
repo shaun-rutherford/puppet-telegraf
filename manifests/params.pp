@@ -48,7 +48,6 @@ class telegraf::params {
       $config_file_mode     = undef
       $config_folder        = 'C:/Program Files/telegraf/telegraf.d'
       $config_folder_mode   = undef
-      $log_directory        = undef
       $logfile              = 'C:/Program Files/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = false
@@ -87,7 +86,6 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'
       $config_folder_mode   = '0770'
-      $log_directory        = '/var/log/telegraf'
       $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = true
       $manage_archive       = false
