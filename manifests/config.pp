@@ -58,8 +58,10 @@ class telegraf::config inherits telegraf {
     file { '/Library/LaunchDaemons/telegraf.plist':
       ensure  => $telegraf::ensure_file,
       content => epp('telegraf/telegraf.plist.epp', {
-        'config_file_owner' => $telegraf::config_file_owner,
-        'config_file_group' => $telegraf::config_file_group,
+        'config_file_owner'  => $telegraf::config_file_owner,
+        'config_file_group'  => $telegraf::config_file_group,
+        'logfile'            => $telegraf::logfile,
+        'log_directory_name' => $log_directory_name,
       }),
     }
   }
