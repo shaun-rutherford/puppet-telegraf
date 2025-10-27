@@ -46,7 +46,9 @@ class telegraf::config inherits telegraf {
     *       => $_dir,
   }
 
-  $log_directory_name = dirname($telegraf::logfile)
+  if $telegraf::logfile {
+    $log_directory_name = dirname($telegraf::logfile)
+  }
 
   file { $log_directory_name:
     owner => $telegraf::config_file_owner,
