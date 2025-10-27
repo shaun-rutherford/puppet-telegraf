@@ -6,7 +6,7 @@ class telegraf::params {
   case $facts['os']['family'] {
     'Darwin': {
       $config_file          = '/usr/local/etc/telegraf.conf'
-      $config_file_owner    = 'telegraf'
+      $config_file_owner    = 'root'
       $config_file_group    = 'telegraf'
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
@@ -26,7 +26,7 @@ class telegraf::params {
     }
     'FreeBSD': {
       $config_file          = '/usr/local/etc/telegraf.conf'
-      $config_file_owner    = 'telegraf'
+      $config_file_owner    = 'root'
       $config_file_group    = 'telegraf'
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
@@ -66,7 +66,7 @@ class telegraf::params {
     }
     'Suse': {
       $config_file          = '/etc/telegraf/telegraf.conf'
-      $config_file_owner    = 'telegraf'
+      $config_file_owner    = 'root'
       $config_file_group    = 'telegraf'
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'
@@ -85,7 +85,7 @@ class telegraf::params {
     }
     default: {
       $config_file          = '/etc/telegraf/telegraf.conf'
-      $config_file_owner    = 'telegraf'
+      $config_file_owner    = 'root'
       $config_file_group    = 'telegraf'
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'

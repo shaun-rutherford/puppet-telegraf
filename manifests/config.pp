@@ -53,6 +53,7 @@ class telegraf::config inherits telegraf {
   file { $log_directory_name:
     owner => $telegraf::config_file_owner,
     group => $telegraf::config_file_group,
+    mode  => $telegraf::config_folder_mode,
     *     => $_dir,
   }
 
