@@ -26,7 +26,7 @@ class telegraf::install {
           extract_path    => $telegraf::archive_install_dir,
           extract_command => 'tar xfz %s --strip-components=2',
           source          => "https://dl.influxdata.com/telegraf/releases/telegraf-${telegraf::archive_version}_darwin_amd64.tar.gz",
-          creates         => "${telegraf::archive_install_dir}/telegraf/usr/bin/telegraf",
+          unless          => "/usr/local/opt/telegraf/usr/bin/telegraf --version | /usr/bin/grep '${telegraf::archive_version}'",
           user            => $telegraf::config_file_owner,
           group           => $telegraf::config_file_group,
           cleanup         => true,
