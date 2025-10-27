@@ -20,7 +20,7 @@
     <array>
       <string>/usr/local/bin/telegraf</string>
       <string>-config</string>
-      <string>%= $config_file %></string>
+      <string><%= $config_file %></string>
       <string>-config-directory</string>
       <string><%= $config_folder %></string>
     </array>
