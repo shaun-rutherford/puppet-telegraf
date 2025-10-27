@@ -20,8 +20,9 @@ class telegraf::install {
       }
 
       if $telegraf::manage_archive {
-        file { $telegraf::archive_install_dir:
+        file { 'Telegraf Archive Directory':
           ensure => directory,
+          name   => $telegraf::archive_install_dir,
           owner  => $telegraf::config_file_owner,
           group  => $telegraf::config_file_group,
         }
