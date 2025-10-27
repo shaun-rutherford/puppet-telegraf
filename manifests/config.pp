@@ -62,6 +62,8 @@ class telegraf::config inherits telegraf {
         'config_file_group'  => $telegraf::config_file_group,
         'logfile'            => $telegraf::logfile,
         'log_directory_name' => $log_directory_name,
+        'config_file'        => $telegraf::config_file,
+        'config_folder'      => $telegraf::config_folder,
       }),
     }
   }

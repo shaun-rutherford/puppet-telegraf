@@ -1,7 +1,9 @@
 <%- | String $config_file_owner,
       String $config_file_group,
       String $logfile,
-      String $log_directory_name
+      String $log_directory_name,
+      String $config_file,
+      String $config_folder
 | -%>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -18,18 +20,18 @@
     <array>
       <string>/usr/local/bin/telegraf</string>
       <string>-config</string>
-      <string>/usr/local/etc/telegraf/telegraf.conf</string>
+      <string>%= $config_file %></string>
       <string>-config-directory</string>
-      <string>/usr/local/etc/telegraf/telegraf.d</string>
+      <string><%= $config_folder %></string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>WorkingDirectory</key>
-    <string>$log_directory_name</string>
+    <string><%= $log_directory_name %></string>
     <key>StandardErrorPath</key>
-    <string>$logfile</string>
+    <string><%= $logfile %></string>
     <key>StandardOutPath</key>
-    <string>$logfile</string>
+    <string><%= $logfile %></string>
     <key>UserName</key>
     <string><%= $config_file_owner %></string>
     <key>GroupName</key>
