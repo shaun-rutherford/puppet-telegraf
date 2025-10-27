@@ -46,7 +46,11 @@ class telegraf::config inherits telegraf {
     *       => $_dir,
   }
 
-  file { $telegraf::log_directory:
+  if $telegraf::logfile {
+    $log_directory_name = dirname($telegraf::logfile)
+  }
+
+  file { $log_directory_name:
     owner => $telegraf::config_file_owner,
     group => $telegraf::config_file_group,
     *     => $_dir,
@@ -56,8 +60,12 @@ class telegraf::config inherits telegraf {
     file { '/Library/LaunchDaemons/telegraf.plist':
       ensure  => $telegraf::ensure_file,
       content => epp('telegraf/telegraf.plist.epp', {
-        'config_file_owner' => $telegraf::config_file_owner,
-        'config_file_group' => $telegraf::config_file_group,
+        'config_file_owner'  => $telegraf::config_file_owner,
+        'config_file_group'  => $telegraf::config_file_group,
+        'logfile'            => $telegraf::logfile,
+        'log_directory_name' => $log_directory_name,
+        'config_file'        => $telegraf::config_file,
+        'config_folder'      => $telegraf::config_folder,
       }),
     }
   }

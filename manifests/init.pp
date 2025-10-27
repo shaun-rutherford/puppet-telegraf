@@ -4,7 +4,6 @@
 # @param package_name Package name
 # @param ensure State of the telegraf package. You can also specify a particular version to install
 # @param config_file Path to the configuration file
-# @param log_directory Path to log file directory
 # @param logfile Path to the log file
 # @param logfile_rotation_interval The logfile will be rotated after the time interval specified, e.g. "1d". 0 = off. Default = "0h"
 # @param logfile_rotation_max_size The logfile will be rotated when it becomes larger than the specified size, e.g. "10MB". 0 = off.  Default = "0MB"
@@ -64,7 +63,6 @@ class telegraf (
   String  $flush_interval                        = $telegraf::params::flush_interval,
   String  $flush_jitter                          = $telegraf::params::flush_jitter,
   String  $precision                             = $telegraf::params::precision,
-  String  $log_directory                         = $telegraf::params::log_directory,
   String  $logfile                               = $telegraf::params::logfile,
   String  $logfile_rotation_interval             = $telegraf::params::logfile_rotation_interval,
   String  $logfile_rotation_max_size             = $telegraf::params::logfile_rotation_max_size,
