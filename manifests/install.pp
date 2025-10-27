@@ -13,7 +13,7 @@ class telegraf::install {
           ensure => present,
         }
 
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }
@@ -78,7 +78,7 @@ class telegraf::install {
         group { $telegraf::config_file_group:
           ensure => present,
         }
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }
@@ -130,7 +130,7 @@ class telegraf::install {
         group { $telegraf::config_file_group:
           ensure => present,
         }
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }

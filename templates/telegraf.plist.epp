@@ -1,9 +1,10 @@
 <%- | String $config_file_owner,
       String $config_file_group,
+      String $config_file,
+      String $config_folder,
       String $logfile,
       String $log_directory_name,
-      String $config_file,
-      String $config_folder
+      String $daemon_user
 | -%>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -33,7 +34,7 @@
     <key>StandardOutPath</key>
     <string><%= $logfile %></string>
     <key>UserName</key>
-    <string><%= $config_file_owner %></string>
+    <string><%= $daemon_user %></string>
     <key>GroupName</key>
     <string><%= $config_file_group %></string>
   </dict>
