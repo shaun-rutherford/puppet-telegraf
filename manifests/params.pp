@@ -11,7 +11,7 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
       $config_folder_mode   = '0770'
-      #$logfile              = '/var/log/telegraf/telegraf.log'
+      $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = true
       $manage_user          = true
@@ -31,7 +31,7 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/usr/local/etc/telegraf.d'
       $config_folder_mode   = '0770'
-      #$logfile              = '/var/log/telegraf/telegraf.log'
+      $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = false
       $manage_user          = false
@@ -71,7 +71,7 @@ class telegraf::params {
       $config_file_mode     = '0640'
       $config_folder        = '/etc/telegraf/telegraf.d'
       $config_folder_mode   = '0770'
-      #$logfile              = ''
+      $logfile              = '/var/log/telegraf/telegraf.log'
       $manage_repo          = false
       $manage_archive       = true
       $manage_user          = true
