@@ -20,13 +20,19 @@ class telegraf::install {
       }
 
       if $telegraf::manage_archive {
-        archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
+        file { "${telegraf::archive_install_dir}-${telegraf::archive_version}":
+          ensure => directory,
+          owner  => $telegraf::config_file_owner,
+          group  => $telegraf::config_file_group,
+        }
+
+        -> archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
           ensure          => present,
           extract         => true,
-          extract_path    => $telegraf::archive_install_dir,
+          extract_path    => "${telegraf::archive_install_dir}-${telegraf::archive_version}",
           extract_command => 'tar xfz %s --strip-components=2',
           source          => "https://dl.influxdata.com/telegraf/releases/telegraf-${telegraf::archive_version}_darwin_amd64.tar.gz",
-          creates         => "${telegraf::archive_install_dir}-${$telegraf::archive_version}/usr/bin/telegraf",
+          creates         => "${telegraf::archive_install_dir}-${telegraf::archive_version}/usr/bin/telegraf",
           user            => $telegraf::config_file_owner,
           group           => $telegraf::config_file_group,
           cleanup         => true,
@@ -34,7 +40,7 @@ class telegraf::install {
 
         -> file { '/usr/local/bin/telegraf':
           ensure => link,
-          target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/telegraf/usr/bin/telegraf",
+          target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/usr/bin/telegraf",
         }
       } else {
         package { $telegraf::package_name:
