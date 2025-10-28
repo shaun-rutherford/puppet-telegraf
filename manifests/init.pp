@@ -48,7 +48,7 @@
 class telegraf (
   String  $package_name                          = $telegraf::params::package_name,
   String  $ensure                                = $telegraf::params::ensure,
-  String  $daemon_user                           = $telegraf::daemon_user,
+  String  $daemon_user                           = $telegraf::params::daemon_user,
   String  $config_file                           = $telegraf::params::config_file,
   String  $config_file_owner                     = $telegraf::params::config_file_owner,
   String  $config_file_group                     = $telegraf::params::config_file_group,
