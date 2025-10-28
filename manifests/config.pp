@@ -53,6 +53,7 @@ class telegraf::config inherits telegraf {
   file { $log_directory_name:
     owner => $telegraf::config_file_owner,
     group => $telegraf::config_file_group,
+    mode  => $telegraf::config_folder_mode,
     *     => $_dir,
   }
 
@@ -62,10 +63,11 @@ class telegraf::config inherits telegraf {
       content => epp('telegraf/telegraf.plist.epp', {
         'config_file_owner'  => $telegraf::config_file_owner,
         'config_file_group'  => $telegraf::config_file_group,
-        'logfile'            => $telegraf::logfile,
-        'log_directory_name' => $log_directory_name,
         'config_file'        => $telegraf::config_file,
         'config_folder'      => $telegraf::config_folder,
+        'logfile'            => $telegraf::logfile,
+        'log_directory_name' => $log_directory_name,
+        'daemon_user'        => $telegraf::daemon_user
       }),
     }
   }

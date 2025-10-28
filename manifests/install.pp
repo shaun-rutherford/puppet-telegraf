@@ -13,41 +13,34 @@ class telegraf::install {
           ensure => present,
         }
 
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }
       }
 
       if $telegraf::manage_archive {
-        archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
-          ensure          => present,
-          extract         => true,
-          extract_path    => $telegraf::archive_install_dir,
-          extract_command => 'tar xfz %s --strip-components=2',
-          source          => "https://dl.influxdata.com/telegraf/releases/telegraf-${telegraf::archive_version}_darwin_amd64.tar.gz",
-          creates         => "${telegraf::archive_install_dir}/telegraf/usr/bin/telegraf",
-          user            => $telegraf::config_file_owner,
-          group           => $telegraf::config_file_group,
-          cleanup         => true,
-        }
-
-        -> file { "${telegraf::archive_install_dir}/telegraf":
+        file { "${telegraf::archive_install_dir}-${telegraf::archive_version}":
           ensure => directory,
           owner  => $telegraf::config_file_owner,
           group  => $telegraf::config_file_group,
         }
 
-        -> file {
-          default:
-            ensure  => link,
-          ;
-          '/usr/local/bin/telegraf':
-            target  => "${telegraf::archive_install_dir}/telegraf/usr/bin/telegraf",
-          ;
-          '/usr/local/etc/telegraf':
-            target => "${telegraf::archive_install_dir}/telegraf/etc/telegraf",
-          ;
+        -> archive { "/tmp/telegraf-${telegraf::archive_version}.tar.gz":
+          ensure          => present,
+          extract         => true,
+          extract_path    => "${telegraf::archive_install_dir}-${telegraf::archive_version}",
+          extract_command => 'tar xfz %s --strip-components=2',
+          source          => "https://dl.influxdata.com/telegraf/releases/telegraf-${telegraf::archive_version}_darwin_amd64.tar.gz",
+          creates         => "${telegraf::archive_install_dir}-${telegraf::archive_version}/usr/bin/telegraf",
+          user            => $telegraf::config_file_owner,
+          group           => $telegraf::config_file_group,
+          cleanup         => true,
+        }
+
+        -> file { '/usr/local/bin/telegraf':
+          ensure => link,
+          target => "${telegraf::archive_install_dir}-${telegraf::archive_version}/usr/bin/telegraf",
         }
       } else {
         package { $telegraf::package_name:
@@ -91,7 +84,7 @@ class telegraf::install {
         group { $telegraf::config_file_group:
           ensure => present,
         }
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }
@@ -143,7 +136,7 @@ class telegraf::install {
         group { $telegraf::config_file_group:
           ensure => present,
         }
-        user { $telegraf::config_file_owner:
+        user { $telegraf::daemon_user:
           ensure => present,
           gid    => $telegraf::config_file_group,
         }
