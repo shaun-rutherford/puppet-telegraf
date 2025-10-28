@@ -16,7 +16,7 @@ class telegraf::params {
       $manage_repo          = false
       $manage_archive       = true
       $manage_user          = true
-      $archive_install_dir  = '/usr/local/opt'
+      $archive_install_dir  = '/usr/local/opt/telegraf'
       $archive_version      = '1.29.4'
       $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_darwin_amd64.tar.gz"
       $repo_location        = 'https://repos.influxdata.com/'
